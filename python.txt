@@ -1,0 +1,25 @@
+def sumlist(str):#定义了一个求和函数，把列表中的数求和
+    s = 0
+    for i in str:
+        s = s + i
+    return(s)
+numbers = [12,14,37,8,6,5,1,3]#给出一个数值列表
+numbers2 = numbers.copy()#将数值列表的值复制给另外一个列表保存
+even = []
+odd = []
+while len(numbers)>0:#这部分是为了把列表的奇数与偶数分开，分别放在两个列表
+    number =numbers.pop()
+    if(number % 2 == 0):
+        even.append(number)
+    else:
+        odd.append(number)
+print(numbers2)#输出实验结果
+print(even)
+print(odd)
+print(sumlist(numbers2))#后面都是调用那个求和函数来计算列表总和
+print(sumlist(even))
+print(sumlist(odd))
+if sumlist(numbers2) == sumlist(even) + sumlist(odd):
+    print ("right")#判断一下我们的分类是否有遗漏
+
+
