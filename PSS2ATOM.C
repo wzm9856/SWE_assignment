@@ -18,71 +18,66 @@ void PSS2Atom(PGSTRC str, PATOMLIST List,IdList IdList)
 	for (; *str == 0; str++) //TODO:判断条件是否应该加上回车符？应该是不用加的因为中间判断的条件已经有IsCRLF了
 	{
 		char ch = *str;
-		if (IsSpaceChar(ch))				//判断空格：除开头空格外其余空格均不作为ATOM存储，直接进入下一次for循环
+		if (IsSpaceChar(ch))					//判断空格：除开头空格外其余空格均不作为ATOM存储，直接进入下一次for循环
 		{
 			str++;
 			continue;	
 		}
-		else if (IsCRLF(ch))				//判断换行：换行说明已经读到字符串结尾，应返回main函数读取下一行
+		else if (IsCRLF(ch) || IsAnnotaion(ch))	//判断换行或注释：换行或注释说明已经读到字符串结尾，应返回main函数读取下一行
 		{
 			AppendCRLF(List);
 			break;
 		}
-		else if (IsNumericFirstChar(ch))	//判断数字首字符
+		else if (IsNumericFirstChar(ch))		//判断数字首字符
 		{
 			while (IsNumericSucceedChar(*str))
 			{
 				*ptemp = *str;
-				ptemp++; str++;
+				ptemp++; str++;		//退出while时str指向非numeric的第一位，退出if时无需再对其进行操作
 			}
-			*ptemp = 0;		//将连续的数字存入temp数组，并将结尾置0
-
-			//TODO:123
+			*ptemp = 0;				//将连续的数字存入temp数组，并将结尾置0
+			if (IsEqual(temp, "+") || IsEqual(temp, "-")) AppendSymbol(List, SearchSymbol(ch));//若是单独的+/-，则直接按符号加入list
+			else if (IsCharExist(temp, '.')) AppendNumber(List, NUMERIC_double, temp);
+			else if (atol(temp) > 2147483647) AppendNumber(List, NUMERIC_signed_long, temp);
+			else AppendNumber(List, NUMERIC_int, temp);
 		}
-		else if (IsSymbolChar(ch))
+		else if (IsSymbolChar(ch))				//判断符号
 		{
-			if (IsZhuShi(ch))
-				break;
-			char NextCh = str[i + 1];
+			char NextCh = *(str++);
 			SPECIALSYMBOL_ID SpecialSymbolId = SearchSpecialSymbol(ch, NextCh);
-			if (SpecialSymbolId)	// 两个相邻字符组成了特殊符号
+			if (SpecialSymbolId)	//两个相邻字符组成了特殊符号
+			{
 				AppendSymbol(List, SpecialSymbolId);
+				str++;				//因为将两个字符加入了list，因此str要++两次，下面只向list加入一个字符，无需再++
+			}
 			else
 			{
 				SYMBOL_ID SymbolId = SearchSymbol(ch);
 				AppendSymbol(List, SymbolId);
 			}
-			if (IsSpaceChar(ch))continue;
-			else if (IsCRLF(ch))break;
 		}
 		else if (IsIdentifierFirstChar(ch))
 		{
-			temp[0] = ch;
-			int j = 1;
-			int n = i + 1;
-			while (IsIdentifierSucceedChar(str[n]))
+			while (IsIdentifierSucceedChar(*str))
 			{
-				temp[j++] = str[n++];
+				*ptemp = *str;
+				ptemp++; str++;		//退出while时str指向非numeric的第一位，退出if时无需再对其进行操作
 			}
-			ch = str[n];
-			temp[j] = 0;
-			KEYWORD_ID KeywordId = SearchKeyword(temp);
-			if (KeywordId)
-				AppendKeyword(List,KeywordId);
+			*ptemp = 0;				//将连续的关键字/标识符存入temp数组，并将结尾置0
+			KEYWORD_ID KeywordId = SearchKeyword(temp);	//关键字字符同时也是标识符字符，所以前面identifier这里keyword也没有问题
+			if (KeywordId) AppendKeyword(List, KeywordId);
 			else
-			{
+			{						//temp中存的一堆字母如果不是关键字就一定是标识符了
 				IDENTIFIER_ID IdId = SearchIdentifierStr(IdList, temp);
 				//TODO
 				if (IdId)
-					AppendOldIdentifier(List,IdId);
+					AppendOldIdentifier(List, IdId);
 				else
 				{
 					IdId = IdentifierStrListAppend(IdList, temp);
 					AppendNewIdentifier(List, IdId);
 				}
 			}
-			if (IsSpaceChar(ch))continue;
-			else if (IsCRLF(ch))break;
 		}
 	}
 

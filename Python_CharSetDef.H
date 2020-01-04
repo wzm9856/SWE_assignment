@@ -26,9 +26,13 @@ BOOL IsNumericSucceedChar(char ch);
 BOOL IsCRLF(char ch);
 
 //检查是否为注释字符（#）
-BOOL IsZhuShi(char ch);
+BOOL IsAnnotation(char ch);
 
+//检查字符串里有没有指定字符
+BOOL IsCharExist(const char str[], char ch);
 
+//判断两字符串是否相等
+BOOL IsEqual(const char s1[], const char s2[]);
 
 
 #endif

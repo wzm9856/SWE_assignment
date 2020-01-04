@@ -47,8 +47,20 @@ bool IsCRLF(char ch)//»»ÐÐ·û
 	return 0;
 }
 
-bool IsZhuShi(char ch)
+bool IsAnnotation(char ch)
 {
 	if (ch == '#') return 1;
 	return 0;
+}
+
+bool IsCharExist(const char str[], char ch) {
+	int i = 0;
+	while (str[i] != 0 && str[i] != ch)i++;
+	return str[i] == ch ? str + i : 0;
+}
+
+BOOL IsEqual(const char s1[], const char s2[]) {
+	int i = 0;
+	while (s1[i] != 0 && s2[i] != 0 && s1[i] == s2[i]) i++;
+	return s1[i] == s2[i] ? 1 : 0;
 }
