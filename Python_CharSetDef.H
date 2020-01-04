@@ -4,16 +4,31 @@
 #include<stdbool.h>
 #define BOOL bool
 
-
+//检查字符是否为空格
 BOOL IsSpaceChar(char ch);
-BOOL IsSymbolChar(char ch);			// [](),.+-*/%&^~!
-BOOL IsIdentifierFirstChar(char ch);	// 字母下划线
-BOOL IsNumericFirstChar(char ch);		// 0~9 +-.
-BOOL IsCRLF(char ch);//换行符
+
+//检查字符是否为[](),.+-*/%&^~!
+BOOL IsSymbolChar(char ch);
+
+//检查是否为标识符首字符（字母下划线）
+BOOL IsIdentifierFirstChar(char ch);
+
+//检查是否为标识符后续字符（字母下划线和数字）
+BOOL IsIdentifierSucceedChar(char ch);
+
+//检查是否为数字首字符（0-9 +-.）
+BOOL IsNumericFirstChar(char ch);
+
+//检查是否为数字后续字符（0-9 +-. Ee）
+BOOL IsNumericSucceedChar(char ch);
+
+//检查是否为换行符（CR/LF)
+BOOL IsCRLF(char ch);
+
+//检查是否为注释字符（#）
 BOOL IsZhuShi(char ch);
 
-BOOL IsIdentifierSucceedChar(char ch);	// 字母下划线数字
-BOOL IsNumericSucceedChar(char ch);		// 0~9 +-.Ee
+
 
 
 #endif

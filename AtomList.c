@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define  GSTR_MAXSIZE		65535
+#define  GSTR_MAXSIZE		1023
 
 typedef struct PAtomList
 {
@@ -98,6 +98,19 @@ void AppendCRLF(PATOMLIST List)
 	Atom.atom_newline = AtomNeline;
 
 	ListAppend(List, Atom);
+}
+
+void AppendNumber(PATOMLIST List, NUMERIC_TYPE NumericType, char* number)
+{
+	ATOM_NUMERIC AtomNumeric;
+	AtomNumeric.numeric_type = NumericType;
+	if (NumericType == NUMERIC_int) AtomNumeric.int_value = atoi(number);
+	else if (NumericType == NUMERIC_double) AtomNumeric.double_value = atof(number);
+	else if (NumericType == NUMERIC_signed_long) AtomNumeric.signed_long_value = atol(number);
+
+	ATOM Atom;
+	Atom.atom_type = _ATOM_NUMERIC;
+	Atom.atom_numeric = AtomNumeric;
 }
 
 void ListAppend(PATOMLIST List, ATOM Atom)

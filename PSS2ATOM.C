@@ -6,39 +6,54 @@
 
 void PSS2Atom(PGSTRC str, PATOMLIST List,IdList IdList)
 {
-	char temp[100] = { 0 };
-	char ch;
-	int i = 0;
-	int m = 0;
-	for (i = 0; i < 100; i++)
+	int indentLength = 0;
+	while (*str = ' ')
 	{
-		ch = str[i];
-		if (IsSpaceChar(ch))
+		indentLength++;
+		str++;
+	}
+	if (indentLength != 0) AppendSpace(List, indentLength); //计算每行开头的空格个数，除开头空格作为ATOM存入列表外
+															//其余空格不计入ATOM，仅作为分割其他ATOM的标志
+	char temp[100] = { 0 }; char* ptemp = temp;
+	for (; *str == 0; str++) //TODO:判断条件是否应该加上回车符？应该是不用加的因为中间判断的条件已经有IsCRLF了
+	{
+		char ch = *str;
+		if (IsSpaceChar(ch))				//判断空格：除开头空格外其余空格均不作为ATOM存储，直接进入下一次for循环
 		{
-			//TODO
-			m++;
-			AppendSpace(List, m);
-			continue;
+			str++;
+			continue;	
 		}
-		else if (IsCRLF(ch))
+		else if (IsCRLF(ch))				//判断换行：换行说明已经读到字符串结尾，应返回main函数读取下一行
 		{
 			AppendCRLF(List);
 			break;
 		}
-		else if (IsNumericFirstChar(ch))
+		else if (IsNumericFirstChar(ch))	//判断数字首字符
 		{
-			temp[0] = ch;
-			int j = 1;
-			int n = i + 1;
-			while (IsNumericSucceedChar(str[n]))
+			while (IsNumericSucceedChar(*str))
 			{
-				temp[j++] = str[n++];
+				*ptemp = *str;
+				ptemp++; str++;
 			}
-			ch = str[n];
-			temp[j] = 0;
+			*ptemp = 0;		//将连续的数字存入temp数组，并将结尾置0
+
+			//TODO:123
+		}
+		else if (IsSymbolChar(ch))
+		{
+			if (IsZhuShi(ch))
+				break;
+			char NextCh = str[i + 1];
+			SPECIALSYMBOL_ID SpecialSymbolId = SearchSpecialSymbol(ch, NextCh);
+			if (SpecialSymbolId)	// 两个相邻字符组成了特殊符号
+				AppendSymbol(List, SpecialSymbolId);
+			else
+			{
+				SYMBOL_ID SymbolId = SearchSymbol(ch);
+				AppendSymbol(List, SymbolId);
+			}
 			if (IsSpaceChar(ch))continue;
 			else if (IsCRLF(ch))break;
-			//TODO:123
 		}
 		else if (IsIdentifierFirstChar(ch))
 		{
@@ -65,22 +80,6 @@ void PSS2Atom(PGSTRC str, PATOMLIST List,IdList IdList)
 					IdId = IdentifierStrListAppend(IdList, temp);
 					AppendNewIdentifier(List, IdId);
 				}
-			}
-			if (IsSpaceChar(ch))continue;
-			else if (IsCRLF(ch))break;
-		}
-		else if (IsSymbolChar(ch))
-		{
-			if (IsZhuShi(ch))
-				break;
-			char NextCh = str[i + 1];
-			SPECIALSYMBOL_ID SpecialSymbolId = SearchSpecialSymbol(ch, NextCh);
-			if (SpecialSymbolId)	// 两个相邻字符组成了特殊符号
-				AppendSymbol(List, SpecialSymbolId);
-			else
-			{
-				SYMBOL_ID SymbolId = SearchSymbol(ch);
-				AppendSymbol(List, SymbolId);
 			}
 			if (IsSpaceChar(ch))continue;
 			else if (IsCRLF(ch))break;

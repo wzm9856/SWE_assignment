@@ -2,15 +2,16 @@
 #define __Python_ElementDef_H_INCLUDED
 
 
-#define KEYWORD_MAXLEN		65535
-#define SYMBOL_MAXLEN		65535
-#define IDENTIFIER_MAXLEN	65535
+#define KEYWORD_MAXLEN		1023
+#define SYMBOL_MAXLEN		1023
+#define IDENTIFIER_MAXLEN	1023
 
 
 typedef int IDENTIFIER_ID;
 
 typedef char* PGSTRC;
 
+//NULL def for in return while if else
 typedef enum
 { 
 	KEYWORD_NULL,  
@@ -23,6 +24,7 @@ typedef enum
 	KEYWORD_else,
 } KEYWORD_ID;
 
+//NULL[](),.+-*/%&^~!
 typedef enum 
 { 
 	SYMBOL_NULL,
@@ -30,8 +32,8 @@ typedef enum
 	SYMBOL_KUOHAOR,
 	SYMBOL_FKHL,
 	SYMBOL_FKHR,
-	SYMBOL_DKHL,
-	SYMBOL_DKHR,
+	//SYMBOL_DKHL,
+	//SYMBOL_DKHR,
 	SYMBOL_XIAOYU,
 	SYMBOL_DAYU,
 	SYMBOL_ADD,
@@ -44,6 +46,7 @@ typedef enum
 	SYMBOL_BAIFENHAO,
 } SYMBOL_ID;
 
+//NULL ++ -- ==
 typedef enum
 {
 	SPECIALSYMBOL_NULL,
@@ -52,7 +55,7 @@ typedef enum
 	SPECIALSYMBOL_SDENGHAO,
 }SPECIALSYMBOL_ID;
 
-
+//NULL int double singedLong
 typedef enum 
 { 
 	NUMERIC_NULL,

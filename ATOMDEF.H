@@ -60,7 +60,7 @@ typedef struct {	//包含空格个数的int
 	int		space_n;
 } ATOM_INDENT;
 
-typedef struct {	//包含新行个数
+typedef struct {	//包含新行个数的int
 	int		newline_n;
 }ATOM_NEWLINE;
 
@@ -112,10 +112,11 @@ typedef struct {	//str:char[]
 	char			str[IDENTIFIER_MAXLEN];
 } IDENTIFIER_STR;
 
-//初始化一个ATOM
+
 PATOMLIST AtomListInit();
 void AppendKeyword(PATOMLIST List, KEYWORD_ID KeywordId);
 void AppendSymbol(PATOMLIST List, SYMBOL_ID SymbolId);
+void AppendNumber(PATOMLIST List, NUMERIC_TYPE NumericType, char* number);
 void AppendNewIdentifier(PATOMLIST List, IDENTIFIER_ID IdId);
 void AppendOldIdentifier(PATOMLIST List, IDENTIFIER_ID IdId);
 void AppendSpace(PATOMLIST List, int n);
