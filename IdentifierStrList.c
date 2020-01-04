@@ -28,7 +28,7 @@ extern IDENTIFIER_ID SearchIdentifierStr(IdList List, const char* sub)
 	IdList pThis;
 	pThis = List->next;
 	if (sub[0] == 0) return NULL;
-	int i = 0;
+	int i = 0; 
 	while (pThis)
 	{
 		int n = 0;
