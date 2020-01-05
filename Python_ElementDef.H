@@ -6,16 +6,16 @@
 #define SYMBOL_MAXLEN		1023
 #define IDENTIFIER_MAXLEN	1023
 
-
 typedef int IDENTIFIER_ID;
 
 typedef char* PGSTRC;
 struct IdentifierStrList;
 typedef struct IdentifierStrList* IdList;	//是IdentifierStrList结构体的指针
+
 //NULL def for in return while if else
 typedef enum
 { 
-	KEYWORD_NULL,  
+	KEYWORD_NULL, 
 	KEYWORD_def, 
 	KEYWORD_for,
 	KEYWORD_in,
@@ -33,8 +33,6 @@ typedef enum
 	SYMBOL_KUOHAOR,
 	SYMBOL_FKHL,
 	SYMBOL_FKHR,
-	//SYMBOL_DKHL,
-	//SYMBOL_DKHR,
 	SYMBOL_XIAOYU,
 	SYMBOL_DAYU,
 	SYMBOL_ADD,
@@ -61,17 +59,9 @@ typedef enum
 { 
 	NUMERIC_NULL,
 	NUMERIC_int,
-	//NUMERIC_float,
 	NUMERIC_double,
 	NUMERIC_signed_long,
-	//NUMERIC_unsigned_long,
 } NUMERIC_TYPE;
-
-//typedef union
-//{
-//	signed long		l;
-//	double			d;
-//} NUMERIC_VAL;
 
 SYMBOL_ID SearchSymbol(const char* str);
 SPECIALSYMBOL_ID SearchSpecialSymbol(const char sh, const char ch);

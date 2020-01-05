@@ -8,9 +8,6 @@ typedef struct IdentifierStrList
 	struct IdentifierStrList* next;
 };
 
-
-//数据域 List：以 ATOM 为元素的通用 LIST （GLIST）
-
 IdList IdentifierStrList_Init()
 {
 	IdList L;
@@ -20,7 +17,6 @@ IdList IdentifierStrList_Init()
 	L->next = NULL;
 	return L;
 }
-
 
 IDENTIFIER_ID SearchIdentifierStr(IdList List, const char* sub)
 {

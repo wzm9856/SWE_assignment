@@ -1,15 +1,13 @@
 // ATOMDEF.H
 // Atom definition
 
-
 #if !defined(__ATOMDEF_H_INCLUDED)
 #define __ATOMDEF_H_INCLUDED
 
-// "Python 的语法特征分析及描述" 负责！
-#include "Python_ElementDef.H"		// Python 语法元素定义
-#include "Python_CharSetDef.H"		// Python 字符集定义
 #include <stdlib.h>
 #include <stdio.h>
+#include "Python_ElementDef.H"		// Python 语法元素定义
+#include "Python_CharSetDef.H"		// Python 字符集定义
 
 
 typedef enum {//用于定义ATOM类型的枚举类型，包括NULL, KEYWORD, SYMBOL, IDENTIFIER, NUMERIC, CHARC, STRINGC, INDENT, NEWLINE
@@ -53,12 +51,9 @@ typedef struct {	//包含NUMERIC_TYPE，表示值的结构体，表示值的NUMERIC_VAL
 	NUMERIC_TYPE		numeric_type;
 	union {
 		int				int_value;
-		//float			float_value;
 		double			double_value;
 		signed long		signed_long_value;
-		//unsigned long	unsigned_long_value;
 	};
-	// NUMERIC_VAL			numeric_value;
 } ATOM_NUMERIC;
 
 typedef struct {	//char_value

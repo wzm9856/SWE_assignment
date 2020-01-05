@@ -2,7 +2,7 @@
 
 int main()
 {
-	FILE* fp = fopen("python.txt", "r");
+	FILE* fp = fopen("python.py", "r");
 	char str[100] = { 0 };
 	PATOMLIST patomList = AtomListInit();
 	IdList IdentifierList = IdentifierStrList_Init();

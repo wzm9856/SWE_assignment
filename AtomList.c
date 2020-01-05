@@ -25,8 +25,6 @@ PATOMLIST AtomListInit()//单链表初始化
 	return L;
 }
 
-
-
 void AppendKeyword(PATOMLIST List, KEYWORD_ID KeywordId)
 {
 	ATOM_KEYWORD AtomKeyword;
@@ -51,7 +49,6 @@ void AppendSymbol(PATOMLIST List, SYMBOL_ID SymbolId)
 	ListAppend(List, Atom);
 }
 
-
 void AppendIdentifier(PATOMLIST List, IDENTIFIER_ID IdId, BOOL IsNew)
 {
 	ATOM_IDENTIFIER AtomIdentifier;
@@ -64,7 +61,6 @@ void AppendIdentifier(PATOMLIST List, IDENTIFIER_ID IdId, BOOL IsNew)
 
 	ListAppend(List, Atom);
 }
-
 
 void AppendSpace(PATOMLIST List, int n)
 {
@@ -108,9 +104,9 @@ void ListAppend(PATOMLIST List, ATOM Atom)
 	PATOMLIST pThis = List;
 	while (pThis->next)
 		pThis = pThis->next;
-	PATOMLIST pThat = (PATOMLIST)malloc(sizeof(struct PAtomList));
-	pThis->next = pThat;
-	pThat->atom = Atom;
-	pThat->next = NULL;
+	PATOMLIST pNew = (PATOMLIST)malloc(sizeof(struct PAtomList));
+	pThis->next = pNew;
+	pNew->atom = Atom;
+	pNew->next = NULL;
 }
 
