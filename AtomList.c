@@ -17,7 +17,10 @@ PATOMLIST AtomListInit()//单链表初始化
 	PATOMLIST L;
 	L = (PATOMLIST)malloc(sizeof(struct PAtomList));
 	if (L == NULL)
+	{
 		printf("申请内存空间失败\n");
+		return NULL;
+	}
 	L->next = NULL;
 	return L;
 }
@@ -49,24 +52,11 @@ void AppendSymbol(PATOMLIST List, SYMBOL_ID SymbolId)
 }
 
 
-void AppendNewIdentifier(PATOMLIST List, IDENTIFIER_ID IdId)
+void AppendIdentifier(PATOMLIST List, IDENTIFIER_ID IdId, BOOL IsNew)
 {
 	ATOM_IDENTIFIER AtomIdentifier;
 	AtomIdentifier.identifier_id = IdId;
-	AtomIdentifier.is_new = 1;
-
-	ATOM Atom;
-	Atom.atom_type = _ATOM_IDENTIFIER;//它的枚举类型是关键字
-	Atom.atom_identifier = AtomIdentifier;
-
-	ListAppend(List, Atom);
-}
-
-void AppendOldIdentifier(PATOMLIST List, IDENTIFIER_ID IdId)
-{
-	ATOM_IDENTIFIER AtomIdentifier;
-	AtomIdentifier.identifier_id = IdId;
-	AtomIdentifier.is_new = 0;
+	AtomIdentifier.is_new = IsNew;
 
 	ATOM Atom;
 	Atom.atom_type = _ATOM_IDENTIFIER;//它的枚举类型是关键字
@@ -115,8 +105,8 @@ void AppendNumber(PATOMLIST List, NUMERIC_TYPE NumericType, char* number)
 
 void ListAppend(PATOMLIST List, ATOM Atom)
 {
-	PATOMLIST pThis = List->next;
-	while (pThis)
+	PATOMLIST pThis = List;
+	while (pThis->next)
 		pThis = pThis->next;
 	PATOMLIST pThat = (PATOMLIST)malloc(sizeof(struct PAtomList));
 	pThis->next = pThat;
@@ -124,16 +114,3 @@ void ListAppend(PATOMLIST List, ATOM Atom)
 	pThat->next = NULL;
 }
 
-
-//AppendIdentifier(IdId, IsNew)
-//{
-//	ATOM_IDENTIFIER AtomIdentifier;
-//	AtomIdentifier.identifier_id = IdId;
-//	AtomIdentifier.is_new = 1;
-//
-//	ATOM Atom;
-//	Atom.atom_type = _ATOM_IDENTIFIER;//它的枚举类型是关键字
-//	Atom.atom_identifier = AtomIdentifier;
-//
-//	ListAppend(Atom);
-//}

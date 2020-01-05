@@ -77,11 +77,11 @@ void PSS2Atom(PGSTRC str, PATOMLIST List,IdList IdList)
 				IDENTIFIER_ID IdId = SearchIdentifierStr(IdList, temp);
 				//TODO
 				if (IdId)
-					AppendOldIdentifier(List, IdId);
+					AppendIdentifier(List, IdId, 0);
 				else
 				{
 					IdId = IdentifierStrListAppend(IdList, temp);
-					AppendNewIdentifier(List, IdId);
+					AppendIdentifier(List, IdId, 1);
 				}
 			}
 		}

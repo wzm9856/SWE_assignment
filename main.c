@@ -2,15 +2,12 @@
 
 int main()
 {
-	FILE* fp = NULL;//fp为txt文件指针 	
-	char str[100] = { 0 };//数组操作，玉女无瓜
+	FILE* fp = fopen("python.txt", "r");
+	char str[100] = { 0 };
 	PATOMLIST patomList = AtomListInit();
 	IdList IdentifierList = IdentifierStrList_Init();
-	fp = fopen("python.txt", "r");//打开数据文件 
 	while (fgets(str, 100, fp) != NULL)
-	{
 		PSS2Atom(str, patomList, IdentifierList);
-	}
-	fclose(fp);//关闭文件
+	fclose(fp);
 	return 0;
 }
