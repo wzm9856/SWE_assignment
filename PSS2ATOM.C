@@ -12,10 +12,11 @@ void PSS2Atom(PGSTRC str, PATOMLIST List,IdList IdList)
 		indentLength++;
 		str++;
 	}
-	if (indentLength != 0) AppendSpace(List, indentLength); //计算每行开头的空格个数，除开头空格作为ATOM存入列表外
+	if (indentLength != 0) 
+		AppendSpace(List, indentLength);		//计算每行开头的空格个数，除开头空格作为ATOM存入列表外
 															//其余空格不计入ATOM，仅作为分割其他ATOM的标志
 	char temp[100] = { 0 }; char* ptemp = temp;
-	for (; *str == 0; str++) //TODO:判断条件是否应该加上回车符？应该是不用加的因为中间判断的条件已经有IsCRLF了
+	for (; *str == 0; str++)
 	{
 		char ch = *str;
 		if (IsSpaceChar(ch))					//判断空格：除开头空格外其余空格均不作为ATOM存储，直接进入下一次for循环
@@ -36,10 +37,14 @@ void PSS2Atom(PGSTRC str, PATOMLIST List,IdList IdList)
 				ptemp++; str++;		//退出while时str指向非numeric的第一位，退出if时无需再对其进行操作
 			}
 			*ptemp = 0;				//将连续的数字存入temp数组，并将结尾置0
-			if (IsEqual(temp, "+") || IsEqual(temp, "-")) AppendSymbol(List, SearchSymbol(ch));//若是单独的+/-，则直接按符号加入list
-			else if (IsCharExist(temp, '.')) AppendNumber(List, NUMERIC_double, temp);
-			else if (atol(temp) > 2147483647) AppendNumber(List, NUMERIC_signed_long, temp);
-			else AppendNumber(List, NUMERIC_int, temp);
+			if (IsEqual(temp, "+") || IsEqual(temp, "-")) 
+				AppendSymbol(List, SearchSymbol(ch));//若是单独的+/-，则直接按符号加入list
+			else if (IsCharExist(temp, '.')) 
+				AppendNumber(List, NUMERIC_double, temp);
+			else if (atol(temp) > 2147483647) 
+				AppendNumber(List, NUMERIC_signed_long, temp);
+			else 
+				AppendNumber(List, NUMERIC_int, temp);
 		}
 		else if (IsSymbolChar(ch))				//判断符号
 		{
@@ -65,7 +70,8 @@ void PSS2Atom(PGSTRC str, PATOMLIST List,IdList IdList)
 			}
 			*ptemp = 0;				//将连续的关键字/标识符存入temp数组，并将结尾置0
 			KEYWORD_ID KeywordId = SearchKeyword(temp);	//关键字字符同时也是标识符字符，所以前面identifier这里keyword也没有问题
-			if (KeywordId) AppendKeyword(List, KeywordId);
+			if (KeywordId) 
+				AppendKeyword(List, KeywordId);
 			else
 			{						//temp中存的一堆字母如果不是关键字就一定是标识符了
 				IDENTIFIER_ID IdId = SearchIdentifierStr(IdList, temp);

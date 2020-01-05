@@ -76,7 +76,15 @@ extern SYMBOL_ID SearchSymbol(const char* str);
 extern SPECIALSYMBOL_ID SearchSpecialSymbol(const char sh, const char ch);
 extern KEYWORD_ID SearchKeyword(PGSTRC pKeywordStr);
 extern NUMERIC_TYPE SearchNumeric(PGSTRC pNumeric);
-extern IDENTIFIER_ID SearchIdentifierStr(const char* sub);
+
+//搜索该标识符是否为已经出现的标识符
+//	输入：
+//		List：IdentifierList的链表头结点
+//		sub：要查找的字符串指针
+//	输出：
+//		IDENTIFIER_ID：为被查找的标识符的编号，0则为未找到
+extern IDENTIFIER_ID SearchIdentifierStr(IdList List, const char* sub);
+
 extern IDENTIFIER_ID IdentifierStrListAppend(IdList List, PGSTRC sub);
 
 #endif

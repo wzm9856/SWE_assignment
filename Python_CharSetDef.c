@@ -64,3 +64,8 @@ BOOL IsEqual(const char s1[], const char s2[]) {
 	while (s1[i] != 0 && s2[i] != 0 && s1[i] == s2[i]) i++;
 	return s1[i] == s2[i] ? 1 : 0;
 }
+
+void StrCpy(char s1[], char s2[]) {
+	for (int i = 0; s1[i] != 0; i++)
+		s1[i] = s2[i];
+}

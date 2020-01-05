@@ -8,6 +8,8 @@
 // "Python 的语法特征分析及描述" 负责！
 #include "Python_CharSetDef.H"		// Python 字符集定义
 #include "Python_ElementDef.H"		// Python 语法元素定义
+#include <stdlib.h>
+#include <stdio.h>
 
 //#if __ID_USE_MACRO
 //typedef int ATOMTYPE;
@@ -41,7 +43,7 @@ typedef enum {//用于定义ATOM类型的枚举类型，包括NULL, KEYWORD, SYMBOL, IDENTIFIE
 struct PAtomList;
 typedef  struct PAtomList* PATOMLIST;
 struct IdentifierStrList;
-typedef struct IdentifierStrList* IdList;
+typedef struct IdentifierStrList* IdList;	//是IdentifierStrList结构体的指针
 
 typedef struct {	//包含KEYWORD_ID
 	KEYWORD_ID			keyword_id;

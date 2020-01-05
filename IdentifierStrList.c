@@ -1,11 +1,10 @@
-// Keyword List 实现方式 2：动态创建
 #include <stdio.h>
 #include <stdlib.h>
 #include"ATOMDEF.H"
 
 typedef struct IdentifierStrList
 {
-	unsigned char data[65535];
+	char data[1023];
 	struct IdentifierStrList* next;
 };
 
@@ -25,45 +24,30 @@ IdList IdentifierStrList_Init()
 
 extern IDENTIFIER_ID SearchIdentifierStr(IdList List, const char* sub)
 {
-	IdList pThis;
-	pThis = List->next;
-	if (sub[0] == 0) return NULL;
-	int i = 0; 
+	IdList pThis = List->next;
+	int Idid = 0; 
 	while (pThis)
 	{
-		int n = 0;
-		int j = 0;
-		while (pThis->data[n] == sub[n])//找到与子串第一个一样的，进入循环
-		{
-			if (pThis->data[n]==0&&sub[n] == 0)
-				return i;
-			n++;//每走一位 i计数
-		}
-		i++;
-		pThis = List->next;
-		for (j = 0; j < i; j++)//跑到上次已经跑到的位置
-			pThis = pThis->next;
+		Idid++;		//当前检查的是第Idid个标识符，如果匹配则直接返回Idid
+		if (IsEqual(pThis->data, sub))
+			return Idid;
+		else pThis = pThis->next;
 	}
 	return 0;
 }
 
 extern IDENTIFIER_ID IdentifierStrListAppend(IdList List, PGSTRC sub)
 {
-	IdList pThis = List->next;
-	int i = 1;
-	while (pThis)
+	IdList pThis = List;
+	IDENTIFIER_ID Idid = 0;
+	while (pThis->next)
 	{
 		pThis = pThis->next;
-		i++;
-	}
-	IdList pThat = (IdList)malloc(sizeof(struct IdentifierStrList));
-	pThis->next = pThat;
-	int j = 0;
-	while (sub[j])
-	{
-		pThat->data[j] = sub[j];
-		j++;
-	}
-	pThat->next = NULL;
-	return i;
+		Idid++;		//Idid代表pThis当前指向的结点序号
+	}				//退出while时pThis指向最后一节点
+	IdList pNew = (IdList)malloc(sizeof(struct IdentifierStrList));
+	pThis->next = pNew;
+	pNew->next = NULL;
+	StrCpy(sub, pNew->data);
+	return Idid + 1;
 }

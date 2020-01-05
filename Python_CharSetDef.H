@@ -34,5 +34,7 @@ BOOL IsCharExist(const char str[], char ch);
 //判断两字符串是否相等
 BOOL IsEqual(const char s1[], const char s2[]);
 
+//将s1字符串内容复制到s2字符串中
+void StrCpy(char s1[], char s2[]);
 
 #endif
