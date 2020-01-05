@@ -7,7 +7,7 @@
 void PSS2Atom(PGSTRC str, PATOMLIST List,IdList IdList)
 {
 	int indentLength = 0;
-	while (*str = ' ')
+	while (*str == ' ')
 	{
 		indentLength++;
 		str++;
@@ -24,7 +24,7 @@ void PSS2Atom(PGSTRC str, PATOMLIST List,IdList IdList)
 			str++;
 			continue;	
 		}
-		else if (IsCRLF(ch) || IsAnnotaion(ch))	//判断换行或注释：换行或注释说明已经读到字符串结尾，应返回main函数读取下一行
+		else if (IsCRLF(ch) || IsAnnotation(ch))	//判断换行或注释：换行或注释说明已经读到字符串结尾，应返回main函数读取下一行
 		{
 			AppendCRLF(List);
 			break;

@@ -14,12 +14,12 @@ static const char KeywordList[][15+1] =
 	"else",
 };
 
-extern KEYWORD_ID SearchKeyword(PGSTRC pKeywordStr)
+KEYWORD_ID SearchKeyword(PGSTRC pKeywordStr)
 {
 	int i = 0;
 	int KEYWORD_LIST_LENGTH = 8;
 	for (i = 1; i < KEYWORD_LIST_LENGTH; i++)
-		if (strcmp(KeywordList[i], pKeywordStr) == 0) return (KEYWORD_ID)i;
+		if (IsEqual(KeywordList[i], pKeywordStr)) return (KEYWORD_ID)i;
 	return 0;
 }
 

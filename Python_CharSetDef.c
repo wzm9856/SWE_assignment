@@ -59,7 +59,7 @@ bool IsCharExist(const char str[], char ch) {
 	return str[i] == ch ? str + i : 0;
 }
 
-BOOL IsEqual(const char s1[], const char s2[]) {
+bool IsEqual(const char s1[], const char s2[]) {
 	int i = 0;
 	while (s1[i] != 0 && s2[i] != 0 && s1[i] == s2[i]) i++;
 	return s1[i] == s2[i] ? 1 : 0;

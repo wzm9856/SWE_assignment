@@ -1,7 +1,7 @@
 #if !defined(__Python_CharSetDef_H_INCLUDED)
 #define __Python_CharSetDef_H_INCLUDED
 
-#include<stdbool.h>
+#include <stdbool.h>
 #define BOOL bool
 
 //检查字符是否为空格

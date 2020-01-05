@@ -1,6 +1,6 @@
 #if !defined(__Python_ElementDef_H_INCLUDED)
 #define __Python_ElementDef_H_INCLUDED
-
+#include"Python_CharSetDef.H"
 
 #define KEYWORD_MAXLEN		1023
 #define SYMBOL_MAXLEN		1023
@@ -10,7 +10,8 @@
 typedef int IDENTIFIER_ID;
 
 typedef char* PGSTRC;
-
+struct IdentifierStrList;
+typedef struct IdentifierStrList* IdList;	//是IdentifierStrList结构体的指针
 //NULL def for in return while if else
 typedef enum
 { 
@@ -72,10 +73,9 @@ typedef enum
 //	double			d;
 //} NUMERIC_VAL;
 
-extern SYMBOL_ID SearchSymbol(const char* str);
-extern SPECIALSYMBOL_ID SearchSpecialSymbol(const char sh, const char ch);
-extern KEYWORD_ID SearchKeyword(PGSTRC pKeywordStr);
-extern NUMERIC_TYPE SearchNumeric(PGSTRC pNumeric);
+SYMBOL_ID SearchSymbol(const char* str);
+SPECIALSYMBOL_ID SearchSpecialSymbol(const char sh, const char ch);
+KEYWORD_ID SearchKeyword(PGSTRC pKeywordStr);
 
 //搜索该标识符是否为已经出现的标识符
 //	输入：
@@ -83,8 +83,8 @@ extern NUMERIC_TYPE SearchNumeric(PGSTRC pNumeric);
 //		sub：要查找的字符串指针
 //	输出：
 //		IDENTIFIER_ID：为被查找的标识符的编号，0则为未找到
-extern IDENTIFIER_ID SearchIdentifierStr(IdList List, const char* sub);
-
-extern IDENTIFIER_ID IdentifierStrListAppend(IdList List, PGSTRC sub);
+IDENTIFIER_ID SearchIdentifierStr(IdList List, const char* sub);
+IDENTIFIER_ID IdentifierStrListAppend(IdList List, PGSTRC sub);
+IdList IdentifierStrList_Init();
 
 #endif

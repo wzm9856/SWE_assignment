@@ -1,28 +1,15 @@
 // ATOMDEF.H
 // Atom definition
-// Copyleft XingWeiwei, 2018-2019
+
 
 #if !defined(__ATOMDEF_H_INCLUDED)
 #define __ATOMDEF_H_INCLUDED
 
 // "Python 的语法特征分析及描述" 负责！
-#include "Python_CharSetDef.H"		// Python 字符集定义
 #include "Python_ElementDef.H"		// Python 语法元素定义
+#include "Python_CharSetDef.H"		// Python 字符集定义
 #include <stdlib.h>
 #include <stdio.h>
-
-//#if __ID_USE_MACRO
-//typedef int ATOMTYPE;
-//#define _ATOM_NULL			0
-//#define _ATOM_KEYWORD		1
-//#define _ATOM_SYMBOL		2
-//#define _ATOM_IDENTIFIER	3
-//#define _ATOM_NUMERIC		4
-//#define _ATOM_CHARC			5
-//#define _ATOM_STRINGC		6
-//#define _ATOM_INDENT		7
-//#define _ATOM_NEWLINE		8
-//#else
 
 
 typedef enum {//用于定义ATOM类型的枚举类型，包括NULL, KEYWORD, SYMBOL, IDENTIFIER, NUMERIC, CHARC, STRINGC, INDENT, NEWLINE
@@ -36,14 +23,10 @@ typedef enum {//用于定义ATOM类型的枚举类型，包括NULL, KEYWORD, SYMBOL, IDENTIFIE
 	_ATOM_INDENT,		// 缩进
 	_ATOM_NEWLINE
 } ATOM_TYPE;//重命名 用它来定义枚举变量 应该是每次定义一个都有上面里面这些东西
-//#endif
-
-#define BOOL char
 
 struct PAtomList;
 typedef  struct PAtomList* PATOMLIST;
-struct IdentifierStrList;
-typedef struct IdentifierStrList* IdList;	//是IdentifierStrList结构体的指针
+
 
 typedef struct {	//包含KEYWORD_ID
 	KEYWORD_ID			keyword_id;
@@ -124,5 +107,6 @@ void AppendOldIdentifier(PATOMLIST List, IDENTIFIER_ID IdId);
 void AppendSpace(PATOMLIST List, int n);
 void AppendCRLF(PATOMLIST List);
 void ListAppend(PATOMLIST List, ATOM Atom);
+void PSS2Atom(PGSTRC str, PATOMLIST List, IdList IdList);
 
 #endif

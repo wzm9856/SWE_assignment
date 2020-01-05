@@ -22,7 +22,7 @@ IdList IdentifierStrList_Init()
 }
 
 
-extern IDENTIFIER_ID SearchIdentifierStr(IdList List, const char* sub)
+IDENTIFIER_ID SearchIdentifierStr(IdList List, const char* sub)
 {
 	IdList pThis = List->next;
 	int Idid = 0; 
@@ -36,7 +36,7 @@ extern IDENTIFIER_ID SearchIdentifierStr(IdList List, const char* sub)
 	return 0;
 }
 
-extern IDENTIFIER_ID IdentifierStrListAppend(IdList List, PGSTRC sub)
+IDENTIFIER_ID IdentifierStrListAppend(IdList List, PGSTRC sub)
 {
 	IdList pThis = List;
 	IDENTIFIER_ID Idid = 0;
