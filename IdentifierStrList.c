@@ -13,7 +13,10 @@ IdList IdentifierStrList_Init()
 	IdList L;
 	L = (IdList)malloc(sizeof(struct IdentifierStrList));
 	if (L == NULL)
+	{
 		printf("ÉêÇëÄÚ´æ¿Õ¼äÊ§°Ü\n");
+		return NULL;
+	}
 	L->next = NULL;
 	return L;
 }
@@ -44,6 +47,6 @@ IDENTIFIER_ID IdentifierStrListAppend(IdList List, PGSTRC sub)
 	IdList pNew = (IdList)malloc(sizeof(struct IdentifierStrList));
 	pThis->next = pNew;
 	pNew->next = NULL;
-	StrCpy(sub, pNew->data);
+	StrCpy(pNew->data, sub);
 	return Idid + 1;
 }

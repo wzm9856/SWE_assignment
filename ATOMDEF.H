@@ -22,8 +22,11 @@ typedef enum {//用于定义ATOM类型的枚举类型，包括NULL, KEYWORD, SYMBOL, IDENTIFIE
 	_ATOM_NEWLINE
 } ATOM_TYPE;//重命名 用它来定义枚举变量 应该是每次定义一个都有上面里面这些东西
 
-struct PAtomList;
-typedef  struct PAtomList* PATOMLIST;
+typedef struct PAtomList
+{
+	ATOM atom;
+	struct PAtomList* next;
+}*PATOMLIST;
 
 
 typedef struct {	//包含KEYWORD_ID

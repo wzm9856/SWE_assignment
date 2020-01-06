@@ -4,12 +4,6 @@
 
 #define  GSTR_MAXSIZE		1023
 
-typedef struct PAtomList
-{
-	ATOM atom;
-	struct PAtomList* next;
-};
-
 //数据域 List：以 ATOM 为元素的通用 LIST （GLIST）
 
 PATOMLIST AtomListInit()//单链表初始化 

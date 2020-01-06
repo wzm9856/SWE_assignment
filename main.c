@@ -1,4 +1,5 @@
 #include"ATOMDEF.H"
+#include"VisualizeDef.h"
 
 int main()
 {
@@ -9,5 +10,7 @@ int main()
 	while (fgets(str, 100, fp) != NULL)
 		PSS2Atom(str, patomList, IdentifierList);
 	fclose(fp);
+	FILE* fp_out = fopen("output.csv", "w");
+	VisualizeAtom(patomList, fp_out);
 	return 0;
 }
