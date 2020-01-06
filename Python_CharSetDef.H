@@ -1,3 +1,6 @@
+//Python_CharSetDef.H
+//Python×Ö·û¼¯¶¨Òå
+
 #if !defined(__Python_CharSetDef_H_INCLUDED)
 #define __Python_CharSetDef_H_INCLUDED
 

@@ -1,5 +1,4 @@
-#include"ATOMDEF.H"
-#include"VisualizeDef.h"
+#include "ATOMDEF.H"
 
 int main()
 {
@@ -12,5 +11,6 @@ int main()
 	fclose(fp);
 	FILE* fp_out = fopen("output.csv", "w");
 	VisualizeAtom(patomList, fp_out);
+	fclose(fp_out);
 	return 0;
 }

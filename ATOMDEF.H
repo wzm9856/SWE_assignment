@@ -4,7 +4,6 @@
 #if !defined(__ATOMDEF_H_INCLUDED)
 #define __ATOMDEF_H_INCLUDED
 
-#include <stdlib.h>
 #include <stdio.h>
 #include "Python_ElementDef.H"		// Python 语法元素定义
 #include "Python_CharSetDef.H"		// Python 字符集定义
@@ -20,14 +19,13 @@ typedef enum {//用于定义ATOM类型的枚举类型，包括NULL, KEYWORD, SYMBOL, IDENTIFIE
 	_ATOM_STRINGC,		// 字符串常量
 	_ATOM_INDENT,		// 缩进
 	_ATOM_NEWLINE
-} ATOM_TYPE;//重命名 用它来定义枚举变量 应该是每次定义一个都有上面里面这些东西
+} ATOM_TYPE;
 
 typedef struct PAtomList
 {
 	ATOM atom;
 	struct PAtomList* next;
 }*PATOMLIST;
-
 
 typedef struct {	//包含KEYWORD_ID
 	KEYWORD_ID			keyword_id;
@@ -48,7 +46,7 @@ typedef struct {	//包含空格个数的int
 
 typedef struct {	//包含新行个数的int
 	int		newline_n;
-}ATOM_NEWLINE;
+} ATOM_NEWLINE;
 
 typedef struct {	//包含NUMERIC_TYPE，表示值的结构体，表示值的NUMERIC_VAL
 	NUMERIC_TYPE		numeric_type;
@@ -83,19 +81,6 @@ typedef struct {	//定义了基本元素ATOM的结构，包含ATOM_TYPE枚举类型和表示ATOM内容
 } ATOM;
 
 
-typedef struct {	//str:char[]
-	char			str[KEYWORD_MAXLEN];
-} KEYWORD_STR;
-
-typedef struct {	//str:char[]
-	char			str[SYMBOL_MAXLEN];
-} SYMBOL_STR;
-
-typedef struct {	//str:char[]
-	char			str[IDENTIFIER_MAXLEN];
-} IDENTIFIER_STR;
-
-
 PATOMLIST AtomListInit();
 void AppendKeyword(PATOMLIST List, KEYWORD_ID KeywordId);
 void AppendSymbol(PATOMLIST List, SYMBOL_ID SymbolId);
@@ -105,5 +90,6 @@ void AppendSpace(PATOMLIST List, int n);
 void AppendCRLF(PATOMLIST List);
 void ListAppend(PATOMLIST List, ATOM Atom);
 void PSS2Atom(PGSTRC str, PATOMLIST List, IdList IdList);
+void VisualizeAtom(PATOMLIST AtomList, FILE* fp);
 
 #endif

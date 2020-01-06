@@ -1,6 +1,11 @@
+//Python_ElementDef.H
+//Python语法元素定义
+
 #if !defined(__Python_ElementDef_H_INCLUDED)
 #define __Python_ElementDef_H_INCLUDED
 #include"Python_CharSetDef.H"
+#include <stdlib.h>
+#include <stdio.h>
 
 #define KEYWORD_MAXLEN		127
 #define SYMBOL_MAXLEN		127
@@ -25,7 +30,7 @@ typedef enum
 	KEYWORD_else,
 } KEYWORD_ID;
 
-//NULL[](),.+-*/%&^~!
+//NULL[](),.+-*/%&^~! ++ -- ==
 typedef enum 
 { 
 	SYMBOL_NULL,
@@ -43,16 +48,10 @@ typedef enum
 	SYMBOL_MAOHAO,
 	SYMBOL_DENGHAO,
 	SYMBOL_BAIFENHAO,
-} SYMBOL_ID;
-
-//NULL ++ -- ==
-typedef enum
-{
-	SPECIALSYMBOL_NULL,
 	SPECIALSYMBOL_ADDADD,
 	SPECIALSYMBOL_SUBSUB,
 	SPECIALSYMBOL_SDENGHAO,
-} SPECIALSYMBOL_ID;
+} SYMBOL_ID;
 
 //NULL int double singedLong
 typedef enum 
@@ -65,17 +64,11 @@ typedef enum
 
 //搜索该字符是否为符号(+ - * / ...)
 //	输入：
-//		str：要搜索的字符指针
+//		ch：要查找的首个字符
+//		nextch：要查找的第二个字符
 //	输出：
 //		SYMBOL_ID：为被查找的符号编号，0则为未找到
-SYMBOL_ID SearchSymbol(const char* str);
-
-//搜索该字符串是否为特殊符号(++ -- ==)
-//	输入：
-//		sh, ch：要查找的字符串的前后两字符
-//	输出：
-//		SPECIALSYMBOL_ID：为被查找的符号编号，0则为未找到
-SPECIALSYMBOL_ID SearchSpecialSymbol(const char sh, const char ch);
+SYMBOL_ID SearchSymbol(char ch, char nextch);
 
 //搜索该字符串是否为关键字（NULL def for if ...)
 //	输入：
@@ -111,12 +104,6 @@ IdList IdentifierStrList_Init();
 //		str：存放返回字符的指针
 void ReturnSymbol(SYMBOL_ID id, char* str);
 
-//返回特殊符号的字符串
-//	输入：
-//		id：特殊符号的编号
-//		str：存放返回字符串的指针
-void ReturnSpecialSymbol(SPECIALSYMBOL_ID id, char* str);
-
 //返回关键字的字符串
 //	输入：
 //		id：关键字的编号
@@ -128,12 +115,6 @@ void ReturnKeyword(KEYWORD_ID id, char* str);
 //		List：标识符链表头指针
 //		id：标识符的编号
 //		str：存放返回字符串的指针
-void ReturnKeyword(IdList List, IDENTIFIER_ID id, char* str);
-
-//返回数值的字符串
-//	输入：
-//		id：数值类型的编号
-//		str：存放返回字符串的指针
-void ReturnNumeric(KEYWORD_ID id, char* str);
+void ReturnIdentifier(IdList List, IDENTIFIER_ID id, char* str);
 
 #endif

@@ -1,7 +1,4 @@
-//#include "GSCAN.H"
-#include"ATOMDEF.H"
-#include <stdlib.h>
-#include <stdio.h>
+#include "ATOMDEF.H"
 
 
 void PSS2Atom(PGSTRC str, PATOMLIST List,IdList IdList)
@@ -13,13 +10,13 @@ void PSS2Atom(PGSTRC str, PATOMLIST List,IdList IdList)
 		str++;
 	}
 	if (indentLength != 0) 
-		AppendSpace(List, indentLength);		//计算每行开头的空格个数，除开头空格作为ATOM存入列表外
+		AppendSpace(List, indentLength);			//计算每行开头的空格个数，除开头空格作为ATOM存入列表外
 															//其余空格不计入ATOM，仅作为分割其他ATOM的标志
 	char temp[100] = { 0 }; char* ptemp = temp;
 	for (; *str == 0; str++)
 	{
 		char ch = *str;
-		if (IsSpaceChar(ch))					//判断空格：除开头空格外其余空格均不作为ATOM存储，直接进入下一次for循环
+		if (IsSpaceChar(ch))						//判断空格：除开头空格外其余空格均不作为ATOM存储，直接进入下一次for循环
 		{
 			str++;
 			continue;	
@@ -29,37 +26,28 @@ void PSS2Atom(PGSTRC str, PATOMLIST List,IdList IdList)
 			AppendCRLF(List);
 			break;
 		}
-		else if (IsNumericFirstChar(ch))		//判断数字首字符
-		{
+		else if (IsNumericFirstChar(ch) && (IsNumericSucceedChar(*(str+1)) || (ch!='+' && ch != '-')))
+		{//判断数字：需要首字符为数字类首字符，同时（第二字符为数字类后续字符或首字符不为+/-）（因为可能是仅个位数或++/--）
 			while (IsNumericSucceedChar(*str))
 			{
 				*ptemp = *str;
 				ptemp++; str++;		//退出while时str指向非numeric的第一位，退出if时无需再对其进行操作
 			}
 			*ptemp = 0;				//将连续的数字存入temp数组，并将结尾置0
-			if (IsEqual(temp, "+") || IsEqual(temp, "-")) 
-				AppendSymbol(List, SearchSymbol(ch));//若是单独的+/-，则直接按符号加入list
-			else if (IsCharExist(temp, '.')) 
+			if (IsCharExist(temp, '.')) 
 				AppendNumber(List, NUMERIC_double, temp);
 			else if (atol(temp) > 2147483647) 
 				AppendNumber(List, NUMERIC_signed_long, temp);
 			else 
 				AppendNumber(List, NUMERIC_int, temp);
 		}
-		else if (IsSymbolChar(ch))				//判断符号
+		else if (IsSymbolChar(ch))					//判断符号
 		{
 			char NextCh = *(str++);
-			SPECIALSYMBOL_ID SpecialSymbolId = SearchSpecialSymbol(ch, NextCh);
-			if (SpecialSymbolId)	//两个相邻字符组成了特殊符号
-			{
-				AppendSymbol(List, SpecialSymbolId);
+			SYMBOL_ID SymbolId = SearchSymbol(ch, NextCh);
+			AppendSymbol(List, SymbolId);
+			if(SymbolId >= 15)
 				str++;				//因为将两个字符加入了list，因此str要++两次，下面只向list加入一个字符，无需再++
-			}
-			else
-			{
-				SYMBOL_ID SymbolId = SearchSymbol(ch);
-				AppendSymbol(List, SymbolId);
-			}
 		}
 		else if (IsIdentifierFirstChar(ch))
 		{

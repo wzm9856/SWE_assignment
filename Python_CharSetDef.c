@@ -1,5 +1,4 @@
 #include "Python_CharSetDef.h"
-#include<stdbool.h>
 
 //本页函数用于将指定字符分类
 
@@ -35,9 +34,9 @@ bool IsNumericFirstChar(char ch)		// 0~9 +-.
 	return 0;
 }
 
-bool IsNumericSucceedChar(char ch)		// 0~9 +-.Ee
+bool IsNumericSucceedChar(char ch)		// 0~9 .Ee
 {
-	if ((ch >= '0' && ch <= '9') || ch == '+' || ch == '-' || ch == '.' || ch == 'e' || ch == 'E') return 1;
+	if ((ch >= '0' && ch <= '9') || ch == '.' || ch == 'e' || ch == 'E') return 1;
 	return 0;
 }
 
