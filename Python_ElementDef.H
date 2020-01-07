@@ -17,7 +17,7 @@ typedef char* PGSTRC;
 struct IdentifierStrList;
 typedef struct IdentifierStrList* IdList;	//是IdentifierStrList结构体的指针
 
-//NULL def for in return while if else
+//NULL def for in return while if else range print
 typedef enum
 { 
 	KEYWORD_NULL, 
@@ -28,6 +28,8 @@ typedef enum
 	KEYWORD_while,
 	KEYWORD_if,
 	KEYWORD_else,
+	KEYWORD_range,
+	KEYWORD_print
 } KEYWORD_ID;
 
 //NULL[](),.+-*/%&^~! ++ -- ==
@@ -38,6 +40,8 @@ typedef enum
 	SYMBOL_KUOHAOR,
 	SYMBOL_FKHL,
 	SYMBOL_FKHR,
+	SYMBOL_DKHL,
+	SYMBOL_DKHY,
 	SYMBOL_XIAOYU,
 	SYMBOL_DAYU,
 	SYMBOL_ADD,

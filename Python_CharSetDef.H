@@ -19,11 +19,8 @@ BOOL IsIdentifierFirstChar(char ch);
 //检查是否为标识符后续字符（字母下划线和数字）
 BOOL IsIdentifierSucceedChar(char ch);
 
-//检查是否为数字首字符（0-9 +-.）
-BOOL IsNumericFirstChar(char ch);
-
-//检查是否为数字后续字符（0-9 +-. Ee）
-BOOL IsNumericSucceedChar(char ch);
+//检查是否为数字字符（0-9 .）
+BOOL IsNumericChar(char ch);
 
 //检查是否为换行符（CR/LF)
 BOOL IsCRLF(char ch);

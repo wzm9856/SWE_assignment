@@ -12,13 +12,15 @@ static const char KeywordList[][8] =
 	"while",
 	"if",
 	"else",
+	"range",
+	"print"
 };
 
 KEYWORD_ID SearchKeyword(PGSTRC pKeywordStr)
 {
 	int i = 0;
-	int KEYWORD_LIST_LENGTH = 8;
-	for (i = 1; i < KEYWORD_LIST_LENGTH; i++)
+	int KEYWORD_LIST_LENGTH = 10;
+	for (i = 0; i < KEYWORD_LIST_LENGTH; i++)
 		if (IsEqual(KeywordList[i], pKeywordStr))
 			return (KEYWORD_ID)i;
 	return 0;
@@ -48,12 +50,11 @@ static const char SymbolList[][3] =
 SYMBOL_ID SearchSymbol(char ch, char nextch)
 {
 	int i;
-	int SYMBOL_LIST_LENGTH = 19;
-	char combine[] = { ch, nextch };
-	for (i = 1; i < SYMBOL_LIST_LENGTH; i++)
+	char combine[] = { ch, nextch, 0 };
+	for (i = 16; i < 19; i++)
 		if (IsEqual(SymbolList[i], combine))
 			return (SYMBOL_ID)i;
-	for (i = 1; i < SYMBOL_LIST_LENGTH; i++)
+	for (i = 0; i < 16; i++)
 		if (*SymbolList[i] == ch)
 			return (SYMBOL_ID)i;
 	return 0;
@@ -114,12 +115,12 @@ IDENTIFIER_ID IdentifierStrListAppend(IdList List, PGSTRC sub)
 
 void ReturnSymbol(SYMBOL_ID id, char* str)
 {
-	StrCpy(str, SymbolList[id]);
+	sprintf(str, "\"%s\"", SymbolList[id]);
 }
 
 void ReturnKeyword(KEYWORD_ID id, char* str)
 {
-	StrCpy(str, KeywordList[id]);
+	sprintf(str, "\"%s\"", KeywordList[id]);
 }
 
 void ReturnIdentifier(IdList List, IDENTIFIER_ID id, char* str)
@@ -127,6 +128,6 @@ void ReturnIdentifier(IdList List, IDENTIFIER_ID id, char* str)
 	IdList pThis = List;
 	for (; id != 0; id--)
 		pThis = pThis->next;
-	StrCpy(str, pThis->data);
+	sprintf(str, "\"%s\"", pThis->data);
 }
 

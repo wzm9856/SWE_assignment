@@ -87,6 +87,8 @@ void AppendNumber(PATOMLIST List, NUMERIC_TYPE NumericType, char* number)
 	ATOM Atom;
 	Atom.atom_type = _ATOM_NUMERIC;
 	Atom.atom_numeric = AtomNumeric;
+
+	ListAppend(List, Atom);
 }
 
 void ListAppend(PATOMLIST List, ATOM Atom)
@@ -103,11 +105,11 @@ void ListAppend(PATOMLIST List, ATOM Atom)
 void VisualizeAtom(PATOMLIST AtomList, IdList IdentiferList, FILE* fp)
 {
 	PATOMLIST pThis = AtomList->next;
+	char type[10] = { 0 };
+	char content[10] = { 0 };
 	while (pThis)
 	{
 		ATOM atom = pThis->atom;
-		char type[10] = { 0 };
-		char content[10] = { 0 };
 		switch (atom.atom_type)
 		{
 		case _ATOM_NULL:
@@ -141,12 +143,13 @@ void VisualizeAtom(PATOMLIST AtomList, IdList IdentiferList, FILE* fp)
 		case _ATOM_NEWLINE:
 			StrCpy(type, "»»ÐÐ");
 			StrCpy(content, "");
+			break;
 		default:
 			StrCpy(type, "×Ö·û»ò×Ö·û´®");
 			StrCpy(content, "Î´Ê¶±ð");
 			break;
 		}
-		fprintf(fp, "%s\t%s\n", type, content);
+		fprintf(fp, "%s,%s\n", type, content);
 		pThis = pThis->next;
 	}
 }

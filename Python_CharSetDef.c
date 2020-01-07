@@ -12,7 +12,7 @@ bool IsSpaceChar(char ch)
 bool IsSymbolChar(char ch)	
 {
 	// [](),.+-*/%&^~!
-	if (ch >= 33 && ch <= 47|| ch >= 91 && ch <= 94) return 1;
+	if ((ch >= 33 && ch <= 47) || (ch >= 91 && ch <= 94) || (ch >= 58 && ch <= 64)) return 1;
 	else return 0;
 }
 
@@ -28,15 +28,9 @@ bool IsIdentifierSucceedChar(char ch)	// 字母下划线数字
 	return 0;
 }
 
-bool IsNumericFirstChar(char ch)		// 0~9 +-.
+bool IsNumericChar(char ch)		// 0~9 .
 {
-	if ((ch >= '0' && ch <= '9') || ch == '+' || ch == '-' || ch == '.') return 1;
-	return 0;
-}
-
-bool IsNumericSucceedChar(char ch)		// 0~9 .Ee
-{
-	if ((ch >= '0' && ch <= '9') || ch == '.' || ch == 'e' || ch == 'E') return 1;
+	if ((ch >= '0' && ch <= '9') || ch == '.') return 1;
 	return 0;
 }
 
