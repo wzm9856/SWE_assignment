@@ -5,6 +5,7 @@
 #define __ATOMDEF_H_INCLUDED
 
 #include <stdio.h>
+#include <stdlib.h>
 #include "Python_ElementDef.H"		// Python 语法元素定义
 #include "Python_CharSetDef.H"		// Python 字符集定义
 
@@ -20,12 +21,6 @@ typedef enum {//用于定义ATOM类型的枚举类型，包括NULL, KEYWORD, SYMBOL, IDENTIFIE
 	_ATOM_INDENT,		// 缩进
 	_ATOM_NEWLINE
 } ATOM_TYPE;
-
-typedef struct PAtomList
-{
-	ATOM atom;
-	struct PAtomList* next;
-}*PATOMLIST;
 
 typedef struct {	//包含KEYWORD_ID
 	KEYWORD_ID			keyword_id;
@@ -80,6 +75,12 @@ typedef struct {	//定义了基本元素ATOM的结构，包含ATOM_TYPE枚举类型和表示ATOM内容
 	};
 } ATOM;
 
+typedef struct PAtomList
+{
+	ATOM atom;
+	struct PAtomList* next;
+}*PATOMLIST;
+
 
 PATOMLIST AtomListInit();
 void AppendKeyword(PATOMLIST List, KEYWORD_ID KeywordId);
@@ -90,6 +91,6 @@ void AppendSpace(PATOMLIST List, int n);
 void AppendCRLF(PATOMLIST List);
 void ListAppend(PATOMLIST List, ATOM Atom);
 void PSS2Atom(PGSTRC str, PATOMLIST List, IdList IdList);
-void VisualizeAtom(PATOMLIST AtomList, FILE* fp);
+void VisualizeAtom(PATOMLIST AtomList, IdList IdentifierList, FILE* fp);
 
 #endif

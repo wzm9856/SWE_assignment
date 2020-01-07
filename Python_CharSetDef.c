@@ -1,4 +1,4 @@
-#include "Python_CharSetDef.h"
+#include "Python_CharSetDef.H"
 
 //本页函数用于将指定字符分类
 

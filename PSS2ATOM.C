@@ -12,9 +12,10 @@ void PSS2Atom(PGSTRC str, PATOMLIST List,IdList IdList)
 	if (indentLength != 0) 
 		AppendSpace(List, indentLength);			//计算每行开头的空格个数，除开头空格作为ATOM存入列表外
 															//其余空格不计入ATOM，仅作为分割其他ATOM的标志
-	char temp[100] = { 0 }; char* ptemp = temp;
-	for (; *str == 0; str++)
+	char temp[20] = { 0 }; 
+	for (; *str != 0; str++)
 	{
+		char* ptemp = temp;
 		char ch = *str;
 		if (IsSpaceChar(ch))						//判断空格：除开头空格外其余空格均不作为ATOM存储，直接进入下一次for循环
 		{

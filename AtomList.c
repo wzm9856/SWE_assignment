@@ -100,38 +100,53 @@ void ListAppend(PATOMLIST List, ATOM Atom)
 	pNew->next = NULL;
 }
 
-void VisualizeAtom(PATOMLIST AtomList, FILE* fp)
+void VisualizeAtom(PATOMLIST AtomList, IdList IdentiferList, FILE* fp)
 {
-	//PATOMLIST pThis = AtomList->next;
-	//char AtomType[10] = { 0 };
-	//char AtomContent[20] = { 0 };
-	//while (pThis)
-	//{
-	//	ATOM atom = pThis->atom;
-	//	char type[10] = { 0 };
-	//	char content[10] = { 0 };
-	//	switch (atom.atom_type)
-	//	{
-	//	case _ATOM_NULL:
-	//		StrCpy(type, "NULL");
-	//		StrCpy(content, "NULL");
-	//		break;
-	//	case _ATOM_KEYWORD:
-	//		StrCpy(type, "关键字");
-	//		ReturnKeyword(atom.atom_keyword.keyword_id, content);
-	//		break;
-	//	case _ATOM_SYMBOL:
-	//		StrCpy(type, "符号");
-	//		ReturnSymbol()
-	//	case _ATOM_KEYWORD:
-	//		StrCpy(type, "关键字");
-	//	case _ATOM_KEYWORD:
-	//		StrCpy(type, "关键字");
-	//	case _ATOM_KEYWORD:
-	//		StrCpy(type, "关键字");
-	//	default:
-	//		break;
-	//	}
-	//	fprintf(fp, "%s\t%s\n", "NULL", "NULL");
-	//}
+	PATOMLIST pThis = AtomList->next;
+	while (pThis)
+	{
+		ATOM atom = pThis->atom;
+		char type[10] = { 0 };
+		char content[10] = { 0 };
+		switch (atom.atom_type)
+		{
+		case _ATOM_NULL:
+			StrCpy(type, "NULL");
+			StrCpy(content, "NULL");
+			break;
+		case _ATOM_KEYWORD:
+			StrCpy(type, "关键字");
+			ReturnKeyword(atom.atom_keyword.keyword_id, content);
+			break;
+		case _ATOM_SYMBOL:
+			StrCpy(type, "符号");
+			ReturnSymbol(atom.atom_symbol.symbol_id, content);
+			break;
+		case _ATOM_IDENTIFIER:
+			if(atom.atom_identifier.is_new) StrCpy(type, "新标识符");
+			else StrCpy(type, "旧标识符");
+			ReturnIdentifier(IdentiferList, atom.atom_identifier.identifier_id, content);
+			break;
+		case _ATOM_NUMERIC:
+			StrCpy(type, "数值");
+			if (atom.atom_numeric.numeric_type == NUMERIC_int)
+				_itoa(atom.atom_numeric.int_value, content, 10);
+			else if (atom.atom_numeric.numeric_type == NUMERIC_double)
+				sprintf(content, "%f", atom.atom_numeric.double_value);
+			break;
+		case _ATOM_INDENT:
+			StrCpy(type, "缩进");
+			_itoa(atom.atom_indent.space_n, content, 10);
+			break;
+		case _ATOM_NEWLINE:
+			StrCpy(type, "换行");
+			StrCpy(content, "");
+		default:
+			StrCpy(type, "字符或字符串");
+			StrCpy(content, "未识别");
+			break;
+		}
+		fprintf(fp, "%s\t%s\n", type, content);
+		pThis = pThis->next;
+	}
 }

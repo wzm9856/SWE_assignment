@@ -54,7 +54,7 @@ SYMBOL_ID SearchSymbol(char ch, char nextch)
 		if (IsEqual(SymbolList[i], combine))
 			return (SYMBOL_ID)i;
 	for (i = 1; i < SYMBOL_LIST_LENGTH; i++)
-		if (IsEqual(SymbolList[i], &ch))
+		if (*SymbolList[i] == ch)
 			return (SYMBOL_ID)i;
 	return 0;
 }
@@ -63,7 +63,7 @@ SYMBOL_ID SearchSymbol(char ch, char nextch)
 
 typedef struct IdentifierStrList
 {
-	char data[1023];
+	char data[63];
 	struct IdentifierStrList* next;
 };
 
